@@ -287,13 +287,13 @@
                     echo "<td>{$a->kategori_nilai}</td>";
                     echo "<td>{$a->bobot}</td>";
                     echo "<td>"; ?>
-                      <button class="btn btn-block btn-primary button-action btnedit" href="#editkategorinilai <?php echo $a ?>" data-toggle="modal">Edit</button>
+                      <button class="btn btn-block btn-primary button-action btnedit" href="#editkategorinilai" data-toggle="modal">Edit</button>
                       <a type="button" class="btn btn-block btn-primary button-action btnhapus " href="<?php echo base_url("index.php/penilaian/hapus_katnilai/".$a->id_kategorinilai); ?>">Hapus
                         <?php
                         echo "</tr>";
                         ?>
-                        <div class="modal fade bs-example-modal-lg" id="editkategorinilai">
-                          <div class="modal-dialog modal-lg" role="document">
+                        <div id="editkategorinilai<?php echo $a; ?>" class="modal fade bs-example-modal-lg" role="dialog">
+                          <div class="modal-dialog modal-lg" >
                             <div class="modal-content">
                               <div class="modal-header">
                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
