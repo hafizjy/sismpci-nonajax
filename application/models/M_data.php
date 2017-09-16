@@ -1,20 +1,16 @@
 <?php
 class M_data extends CI_Model{
-	function deskripsinilai(){
-		return $this->db->query("SELECT * FROM deskripsi_nilai")->result();
+	function getdeskripsinilai(){
+		return $this->db->query("SELECT * FROM deskripsi_nilai");
 	}
+
 
 	function getkategorinilai(){
 		return $this->db->query("SELECT * FROM kategori_nilai");
 	}
 	function setkategorinilai(){
 		
-		$katnilai=$this->input->post('katnilai');
-		$bobot=$this->input->post('bobot');
-		$data= array(
-			'kategori_nilai'=>$katnilai,
-			'bobot'=>$bobot
-			);
+		
 
 		$this->db->insert('kategori_nilai',$data);
 	}
@@ -33,7 +29,11 @@ class M_data extends CI_Model{
 		$this->db->update('kategori_nilai',$data);
 	}
 	
-	function delkategorinilai($where,$table){
+	function tambahdata($data,$table){
+		$this->db->insert($table,$data);
+	}
+
+	function hapusdata($where,$table){
 		$this->db->where($where);
 		$this->db->delete($table);
 	}	
