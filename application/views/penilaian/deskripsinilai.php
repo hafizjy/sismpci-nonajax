@@ -274,7 +274,16 @@
                   <div class="form-group formgrup jarakform">
                     <label for="inputKurikulum" class="col-sm-2 control-label">Deskripsi Nilai</label>
                     <div class="col-sm-10">
-                      <textarea name="deskripsi"  rows="5" cols="40"></textarea>
+                      <?php
+                        $option= array(
+                            'name'=>'deskripsi[]',
+                            'rows'=>'4',
+                            'cols'=>'39'
+                          );
+                        echo form_textarea($option);
+
+                      ?>
+                     
                       <!-- <input type="text" class="form-control" id="inputName" placeholder="Deskripsi nilai"> -->
                     </div>
                   </div>

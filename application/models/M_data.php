@@ -33,6 +33,10 @@ class M_data extends CI_Model{
 		$this->db->insert($table,$data);
 	}
 
+	function tambahdatabatch($data,$table){
+		$this->db->insert_batch($table,$data);
+	}
+
 	function hapusdata($where,$table){
 		$this->db->where($where);
 		$this->db->delete($table);

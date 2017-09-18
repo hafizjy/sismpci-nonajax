@@ -19,13 +19,17 @@ class Penilaian extends CI_Controller {
     $bts_b=$this->input->post('bts_b');
     $predikat=$this->input->post('predikat');
     $deskripsi=$this->input->post('deskripsi');
-    $data= array(
+
+    for ($i=0; $i <count($deskripsi) ; $i++) { 
+        $data[$i]= array(
         'Nilai_atas'=>$bts_a,
         'Nilai_bawah'=>$bts_b,
         'predikat'=>$predikat,
-        'deskripsi'=>$deskripsi
+        'deskripsi'=>$deskripsi[$i]
     );
-    $this->M_data->tambahdata($data,'deskripsi_nilai');
+    }
+        
+    $this->M_data->tambahdatabatch($data,'deskripsi_nilai');
     $this->load->view('penilaian/penilaian_header');
     $this->load->view('penilaian/deskripsinilai');     
     redirect('penilaian/deskripsinilai');
