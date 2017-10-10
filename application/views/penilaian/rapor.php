@@ -137,7 +137,7 @@
 
       <li class="active"><a href="#"><i class="fa fa-circle-o "></i> Penilaian</a>
        <ul class="treeview-menu active">
-        <li class=""><a href="<?php echo base_url('index.php/Penilaian') ?>"><i class="fa fa-circle-o text-red"></i> Nilai Siswa</a></li>
+        <li class=""><a href="<?php echo base_url('index.php/Penilaian/nilaisiswa') ?>"><i class="fa fa-circle-o text-red"></i> Nilai Siswa</a></li>
         <li ><a href="<?php echo base_url('index.php/penilaian/kategorinilai') ?>"><i class="fa fa-circle-o text-red"></i> Kategori Nilai</a></li>
         <li><a href="<?php echo base_url('index.php/penilaian/jenisNA') ?>"><i class="fa fa-circle-o text-red"></i> Jenis Nilai Akhir</a></li>
         <li class=""><a href="<?php echo base_url('index.php/penilaian/deskripsinilai') ?>"><i class="fa fa-circle-o text-red"></i> Deskripsi Nilai</a></li>

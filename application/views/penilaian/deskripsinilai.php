@@ -139,7 +139,7 @@
 
           <li class="active"><a href="#"><i class="fa fa-circle-o "></i> Penilaian</a>
            <ul class="treeview-menu active">
-            <li class=""><a href="<?php echo base_url('index.php/Penilaian') ?>"><i class="fa fa-circle-o text-red"></i> Nilai Siswa</a></li>
+            <li class=""><a href="<?php echo base_url('index.php/Penilaian/nilaisiswa') ?>"><i class="fa fa-circle-o text-red"></i> Nilai Siswa</a></li>
             <li class=""><a href="<?php echo base_url('index.php/penilaian/kategorinilai') ?>"><i class="fa fa-circle-o text-red"></i> Kategori Nilai</a></li>
             <li><a href="<?php echo base_url('index.php/penilaian/jenisNA') ?>"><i class="fa fa-circle-o text-red"></i> Jenis Nilai Akhir</a></li>
             <li class="active"><a href="<?php echo base_url('index.php/penilaian/deskripsinilai') ?>"><i class="fa fa-circle-o text-red"></i> Deskripsi Nilai</a></li>
@@ -210,6 +210,13 @@
     </ol>
   </section>
 
+
+  <!-- =========================================================================================== -->
+  <!-- =========================================================================================== -->
+  <!-- =========================================================================================== -->
+  <!-- =========================================================================================== -->
+
+
   <!-- Main content -->
   <section class="content">
     <!-- Small boxes (Stat box) -->
@@ -274,20 +281,11 @@
                   <div class="form-group formgrup jarakform">
                     <label for="inputKurikulum" class="col-sm-2 control-label">Deskripsi Nilai</label>
                     <div class="col-sm-10">
-                      <?php
-                        $option= array(
-                            'name'=>'deskripsi[]',
-                            'rows'=>'4',
-                            'cols'=>'39'
-                          );
-                        echo form_textarea($option);
+                      <textarea type="text" name="deskripsi"> <?php echo set_value('deskripsi'); ?> </textarea>
 
-                      ?>
-                     
                       <!-- <input type="text" class="form-control" id="inputName" placeholder="Deskripsi nilai"> -->
                     </div>
                   </div>
-
                 </div>
               </div>
               <div class="tambahmapel">
@@ -303,10 +301,12 @@
           </div>
           <div class="tab-pane active" id="lihatdeskripsi">
            <select>
-            <option>Kelas 7</option>
-            <option>Kelas 8</option>
-            <option>Kelas 9</option>
-
+            <?php
+            foreach ($kelas_reguler_berjalan as $d){
+              ?>
+              <option value=""><?php echo $d->nama_kelas;?></option>
+              <?php
+            }?>
           </select>
           <form class="">
             <select>
@@ -347,90 +347,50 @@
                     echo "<td>{$s->Nilai_bawah}</td>";
                     echo "<td>{$s->predikat}</td>";
                     echo "<td>{$s->deskripsi}</td>";
-                    echo "<td class='hidden'>{$s->mapel_id}</td>";
                     echo "<td>";
                     ?>
-                    <button class="btn btn-block btn-primary button-action btnedit" href="#editdesknilai" data-toggle="modal">Edit</button>
-                    <a type="button" class="btn btn-block btn-primary button-action btnhapus " href="<?php echo base_url("index.php/penilaian/hapus_desknilai/".$s->id_deskripsi); ?>">Hapus
+                    <a data-toggle="modal" data-show="true" data-target="#editdesknilai<?php echo $no; ?>" class="btn btn-block btn-primary button-action btnedit" href="<?php echo base_url("penilaian/form_edit_deskripsi/".$s->id_deskripsi); ?>" >Edit</a>
+                    <a type="button" style="background: red ; border: red;" class="btn btn-block btn-primary button-action btnhapus " href="<?php echo base_url("index.php/penilaian/hapus_desknilai/".$s->id_deskripsi); ?>" onclick="return confirm_delete();">Hapus
                       <?php
                       echo "</tr>";
                       ?>
-                      <div class="modal fade bs-example-modal-lg" id="editdesknilai">
-                        <div class="modal-dialog modal-lg" role="document">
+                      <div id="editdesknilai<?php echo $no; ?>" class="modal fade " role="dialog">
+                        <div class="modal-dialog modal-lg" >
                           <div class="modal-content">
                             <div class="modal-header">
                              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                             <h4 class="modal-title">Edit Kategori Nilai</h4>
                            </div>
                            <div class="modal-body"> 
-                            <form class="form-horizontal "  action="<?php echo base_url("index.php/penilaian/ubah_katnilai"); ?>" method="post" id="desknilai">
-                              <div class="bigbox-mapel" > 
-                                <div class="box-mapel">
-
-                                  <div class="form-group formgrup jarakform">
-                                    <label for="inputKurikulum" class="col-sm-2 control-label">Batas Nilai atas</label>
-                                    <div class="col-sm-4">
-                                      <input type="hidden" name="id" value="<?php echo $s->id_deskripsi; ?>"> 
-                                      <input type="text" name="bts_a" class="form-control"  value="<?php echo $s->Nilai_atas ; ?>">
-                                    </div>
-                                  </div>
-
-                                  <div class="form-group formgrup jarakform">
-                                    <label for="inputKurikulum" class="col-sm-2 control-label">Batas Nilai Bawah</label>
-                                    <div class="col-sm-4">
-                                      <input type="text" name="bts_b" class="form-control"  value="<?php echo $s->Nilai_bawah ; ?>">
-                                    </div>
-                                  </div>
-                                  <div class="form-group formgrup jarakform">
-                                    <label for="inputKurikulum" class="col-sm-2 control-label">Predikat</label>
-                                    <div class="col-sm-4">
-                                      <input type="text" name="predikat" class="form-control"  value="<?php echo $s->predikat ; ?>">
-                                    </div>
-                                  </div>
-                                  <div class="form-group formgrup jarakform">
-                                    <label for="inputKurikulum" class="col-sm-2 control-label">Deskripsi</label>
-                                    <div class="col-sm-4">
-                                      <textarea name="deskripsi" form="desknilai" value="<?php echo $s->deskripsi ?>"></textarea>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="modal-footer">
-                                  <div class="form-group">
-                                    <div class="col-sm-offset-2 col-sm-10">
-                                      <button class="btn btn-danger"><a style="color: white;" href="<?php echo base_url("index.php/penilaian/ubah_katnilai/".$s->id_deskripsi); ?>" >Submit
-                                      </button>
-                                      <button class="btn btn-danger" data-dismiss="modal" href="#lihatkategori" data-toggle="tab">Back</button>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
+                           </div>
+                         </div>
 
 
-                            </form>
-                          </div>
-                        </div>
-                      </div>
-                      <?php
-                    }
-                    ?>                  
-                  </tbody>
-                </table>
-              </div>
-              <!-- /.box-body -->
-            </div>
-          </div>
-          
-        </div>
-        <!-- /.tab-pane -->
 
-        <!-- /.tab-pane -->
+                       </div>
+                     </div>
+                     <?php
+                   }
+                   ?>                  
+                 </tbody>
+               </table>
+             </div>
+             <!-- /.box-body -->
+           </div>
+         </div>
+         
+       </div>
+       <!-- /.tab-pane -->
+
+       <!-- /.tab-pane -->
 
 
-      </div>
-      <!-- /.tab-content -->
-    </div>
-    <!-- /.nav-tabs-custom -->
-  </div>
-  <!-- /.col -->
+     </div>
+     <!-- /.tab-content -->
+   </div>
+   <!-- /.nav-tabs-custom -->
+ </div>
+ <!-- /.col -->
 </div>
 <!-- /.row (main row) -->
 
@@ -440,275 +400,6 @@
 <!-- /.content-wrapper -->
 
 <!-- Control Sidebar -->
-<aside class="control-sidebar control-sidebar-dark">
-  <!-- Create the tabs -->
-  <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
-    <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
-    <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
-  </ul>
-  <!-- Tab panes -->
-  <div class="tab-content">
-    <!-- Home tab content -->
-    <div class="tab-pane" id="control-sidebar-home-tab">
-      <h3 class="control-sidebar-heading">Recent Activity</h3>
-      <ul class="control-sidebar-menu">
-        <li>
-          <a href="javascript:void(0)">
-            <i class="menu-icon fa fa-birthday-cake bg-red"></i>
-
-            <div class="menu-info">
-              <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
-
-              <p>Will be 23 on April 24th</p>
-            </div>
-          </a>
-        </li>
-        <li>
-          <a href="javascript:void(0)">
-            <i class="menu-icon fa fa-user bg-yellow"></i>
-
-            <div class="menu-info">
-              <h4 class="control-sidebar-subheading">Frodo Updated His Profile</h4>
-
-              <p>New phone +1(800)555-1234</p>
-            </div>
-          </a>
-        </li>
-        <li>
-          <a href="javascript:void(0)">
-            <i class="menu-icon fa fa-envelope-o bg-light-blue"></i>
-
-            <div class="menu-info">
-              <h4 class="control-sidebar-subheading">Nora Joined Mailing List</h4>
-
-              <p>nora@example.com</p>
-            </div>
-          </a>
-        </li>
-        <li>
-          <a href="javascript:void(0)">
-            <i class="menu-icon fa fa-file-code-o bg-green"></i>
-
-            <div class="menu-info">
-              <h4 class="control-sidebar-subheading">Cron Job 254 Executed</h4>
-
-              <p>Execution time 5 seconds</p>
-            </div>
-          </a>
-        </li>
-      </ul>
-      <!-- /.control-sidebar-menu -->
-
-      <h3 class="control-sidebar-heading">Tasks Progress</h3>
-      <ul class="control-sidebar-menu">
-        <li>
-          <a href="javascript:void(0)">
-            <h4 class="control-sidebar-subheading">
-              Custom Template Design
-              <span class="label label-danger pull-right">70%</span>
-            </h4>
-
-            <div class="progress progress-xxs">
-              <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
-            </div>
-          </a>
-        </li>
-        <li>
-          <a href="javascript:void(0)">
-            <h4 class="control-sidebar-subheading">
-              Update Resume
-              <span class="label label-success pull-right">95%</span>
-            </h4>
-
-            <div class="progress progress-xxs">
-              <div class="progress-bar progress-bar-success" style="width: 95%"></div>
-            </div>
-          </a>
-        </li>
-        <li>
-          <a href="javascript:void(0)">
-            <h4 class="control-sidebar-subheading">
-              Laravel Integration
-              <span class="label label-warning pull-right">50%</span>
-            </h4>
-
-            <div class="progress progress-xxs">
-              <div class="progress-bar progress-bar-warning" style="width: 50%"></div>
-            </div>
-          </a>
-        </li>
-        <li>
-          <a href="javascript:void(0)">
-            <h4 class="control-sidebar-subheading">
-              Back End Framework
-              <span class="label label-primary pull-right">68%</span>
-            </h4>
-
-            <div class="progress progress-xxs">
-              <div class="progress-bar progress-bar-primary" style="width: 68%"></div>
-            </div>
-          </a>
-        </li>
-      </ul>
-      <!-- /.control-sidebar-menu -->
-
-    </div>
-    <!-- /.tab-pane -->
-    <!-- Stats tab content -->
-    <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
-    <!-- /.tab-pane -->
-    <!-- Settings tab content -->
-    <div class="tab-pane" id="control-sidebar-settings-tab">
-      <form method="post">
-        <h3 class="control-sidebar-heading">General Settings</h3>
-
-        <div class="form-group">
-          <label class="control-sidebar-subheading">
-            Report panel usage
-            <input type="checkbox" class="pull-right" checked>
-          </label>
-
-          <p>
-            Some information about this general settings option
-          </p>
-        </div>
-        <!-- /.form-group -->
-
-        <div class="form-group">
-          <label class="control-sidebar-subheading">
-            Allow mail redirect
-            <input type="checkbox" class="pull-right" checked>
-          </label>
-
-          <p>
-            Other sets of options are available
-          </p>
-        </div>
-        <!-- /.form-group -->
-
-        <div class="form-group">
-          <label class="control-sidebar-subheading">
-            Expose author name in posts
-            <input type="checkbox" class="pull-right" checked>
-          </label>
-
-          <p>
-            Allow the user to show his name in blog posts
-          </p>
-        </div>
-        <!-- /.form-group -->
-
-        <h3 class="control-sidebar-heading">Chat Settings</h3>
-
-        <div class="form-group">
-          <label class="control-sidebar-subheading">
-            Show me as online
-            <input type="checkbox" class="pull-right" checked>
-          </label>
-        </div>
-        <!-- /.form-group -->
-
-        <div class="form-group">
-          <label class="control-sidebar-subheading">
-            Turn off notifications
-            <input type="checkbox" class="pull-right">
-          </label>
-        </div>
-        <!-- /.form-group -->
-
-        <div class="form-group">
-          <label class="control-sidebar-subheading">
-            Delete chat history
-            <a href="javascript:void(0)" class="text-red pull-right"><i class="fa fa-trash-o"></i></a>
-          </label>
-        </div>
-        <!-- /.form-group -->
-      </form>
-    </div>
-    <!-- /.tab-pane -->
-  </div>
-</aside>
-<!-- /.control-sidebar -->
-  <!-- Add the sidebar's background. This div must be placed
-   immediately after the control sidebar -->
-   <div class="control-sidebar-bg"></div>
- </div>
- <!-- ./wrapper -->
-
- <!-- jQuery 2.2.3 -->
- <script src="<?php echo base_url(); ?>assets/plugins/jQuery/jquery-2.2.3.min.js"></script>
- <!-- jQuery UI 1.11.4 -->
- <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
- <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
- <script>
-  $.widget.bridge('uibutton', $.ui.button);
-</script>
-<script src="<?php echo base_url(); ?>assets/bootstrap/js/bootstrap.min.js"></script>
-<!-- Morris.js charts -->
-<!-- Sparkline -->
-<script src="<?php echo base_url(); ?>assets/plugins/sparkline/jquery.sparkline.min.js"></script>
-<!-- jvectormap -->
-<script src="<?php echo base_url(); ?>assets/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
-<script src="<?php echo base_url(); ?>assets/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
-<!-- jQuery Knob Chart -->
-<script src="<?php echo base_url(); ?>assets/plugins/knob/jquery.knob.js"></script>
-<!-- daterangepicker -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
-<script src="<?php echo base_url(); ?>assets/plugins/daterangepicker/daterangepicker.js"></script>
-<!-- datepicker -->
-<script src="<?php echo base_url(); ?>assets/plugins/datepicker/bootstrap-datepicker.js"></script>
-<!-- Bootstrap WYSIHTML5 -->
-<script src="<?php echo base_url(); ?>assets/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
-<!-- Slimscroll -->
-<script src="<?php echo base_url(); ?>assets/plugins/slimScroll/jquery.slimscroll.min.js"></script>
-<!-- FastClick -->
-<script src="<?php echo base_url(); ?>assets/plugins/fastclick/fastclick.js"></script>
-<!-- AdminLTE App -->
-<script src="<?php echo base_url(); ?>assets/dist/js/app.min.js"></script>
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<!-- AdminLTE for demo purposes -->
-<script src="<?php echo base_url(); ?>assets/dist/js/demo.js"></script>
-<!-- DataTables -->
-<script src="<?php echo base_url(); ?>assets/plugins/datatables/jquery.dataTables.min.js"></script>
-<script src="<?php echo base_url(); ?>assets/plugins/datatables/dataTables.bootstrap.min.js"></script>
-</body>
-<script>
-  tinymce.init({
-    selector: 'textarea',
-    height: 300,
-    theme: 'modern',
-    plugins: [
-    'advlist autolink lists link image charmap print preview hr anchor pagebreak',
-    'searchreplace wordcount visualblocks visualchars code fullscreen',
-    'insertdatetime media nonbreaking save table contextmenu directionality',
-    'emoticons template paste textcolor colorpicker textpattern imagetools codesample toc'
-    ],
-    toolbar1: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
-    toolbar2: 'print preview media | forecolor backcolor emoticons | codesample',
-    image_advtab: true,
-    templates: [
-    { title: 'Test template 1', content: 'Test 1' },
-    { title: 'Test template 2', content: 'Test 2' }
-    ],
-    content_css: [
-    '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
-    '//www.tinymce.com/css/codepen.min.css'
-    ]
-  });
-</script>
-<script>
-  $(function () {
-    $("#example1").DataTable();
-    $('#example2').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false
-    });
-  });
-</script>
 <script type="text/javascript">
   $(document).ready(function() {
       var max_fields      = 50; //maximum input boxes allowed
