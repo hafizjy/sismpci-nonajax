@@ -18,10 +18,33 @@ class Penilaian extends CI_Controller {
     $data1['kategori_nilai'] = $this->M_data->getKategorinilai()->result();
     $data2['siswa'] = $this->M_data->getNamasiswa()->result();
     $data3['jenis_nilai_akhir'] = $this->M_data->getJenisnilai()->result();
-    $dataAll= $data+$data1+$data2+$data3;
-    $dataAll=array_merge($data,$data1,$data2,$data3);
+    $data4['nilai_siswa'] = $this->M_data->getNilai()->result();
+    $data5['mapel'] = $this->M_data->getMapel()->result();
+    
+    $dataAll= $data+$data1+$data2+$data3+$data4+$data5;
+    $dataAll=array_merge($data,$data1,$data2,$data3,$data4,$data5);
     $this->load->view('penilaian/nilaisiswa',$dataAll);
 }
+
+
+public function tambah_nilai(){
+    $bts_a=$this->input->post('bts_a');
+    $bts_b=$this->input->post('bts_b');
+    $predikat=$this->input->post('predikat');
+    $deskripsi=nl2br($this->input->post('deskripsi'));
+
+    $data= array(
+        'Nilai_atas'=>$bts_a,
+        'Nilai_bawah'=>$bts_b,
+        'predikat'=>$predikat,
+        'deskripsi'=>$deskripsi
+    );
+    $this->M_data->tambahdata($data,'deskripsi_nilai');
+    $this->load->view('penilaian/deskripsinilai');     
+    redirect('penilaian/deskripsinilai');
+
+}
+
 public function deskripsinilai(){
  $this->load->model('M_data');
  $data['deskripsi_nilai'] = $this->M_data->getDeskripsinilai()->result();

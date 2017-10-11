@@ -1,5 +1,8 @@
 <?php
 class M_data extends CI_Model{
+	function getNilai(){
+		return $this->db->query("SELECT * FROM nilai_siswa n JOIN kategori_nilai k ON n.kategori_nilai_id=k.id_kategorinilai JOIN jenis_nilai_akhir j ON n.jenis_na_id=j.id_jenis_na JOIN mapel m ON n.mapel_id=m.id_mapel JOIN siswa s ON n.NISN=s.nisn");
+	}
 	function getDeskripsinilai(){
 		return $this->db->query("SELECT * FROM deskripsi_nilai");
 	}
@@ -16,7 +19,7 @@ class M_data extends CI_Model{
 	}
 
 	function getMapel(){
-		return $this->db->query("SELECT * FROM kelas_reguler_berjalan k JOIN kelas_reguler ");
+		return $this->db->query("SELECT * FROM mapel k JOIN nilai_siswa n ON k.id_mapel=n.mapel_id ");
 	}
 
 	function getKelas(){

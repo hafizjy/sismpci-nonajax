@@ -232,56 +232,58 @@
       <div class="col-md-12">
         <div class="nav-tabs-custom">
           <ul class="nav nav-tabs">
-            <li class="active"><a href="#presensisiswa" data-toggle="tab">Nilai Siswa</a></li>
+            <li class="active"><a href="#daftar" data-toggle="tab">Daftar Nilai</a></li>
+            <li class=""><a href="#presensisiswa" data-toggle="tab">Tambah Nilai</a></li>
             <li><a href="#leger" data-toggle="tab">LEGER</a></li>
           </ul>
           <div class="tab-content">
-            <div class="active tab-pane" id="presensisiswa">
+            <div class=" tab-pane" id="presensisiswa">
               <div class="box">
                 <div class="box-header">
                   <h3 class="box-title"></h3>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
-                  <select>
-                    <?php
-                    foreach ($kelas_reguler_berjalan as $d){
-                      ?>
-                      <option value="" name=""><?php echo $d->nama_kelas;?></option>
+                  <form>
+                    <select>
                       <?php
-                    }?>
-                  </select>
-                  <button onclick="tambahNilai()">Tambah Nilai</button>
-                  <script type="text/javascript">
-                    function tambahNilai() {
-                      var head = '<th style="position: relative">'+
-                      'NILAI <br>'+
-                      '<select>' 
-                      <?php foreach ($kategori_nilai as $w ) {
+                      foreach ($kelas_reguler_berjalan as $d){
+                        ?>
+                        <option value="" name=""><?php echo $d->nama_kelas;?></option>
+                        <?php
+                      }?>
+                    </select>
+                    <button onclick="tambahNilai()">Tambah Nilai</button>
+                    <script type="text/javascript">
+                      function tambahNilai() {
+                        var head = '<th style="position: relative">'+
+                        'NILAI <br>'+
+                        '<select>' 
+                        <?php foreach ($kategori_nilai as $w ) {
 
-                       ?>+
-                       '<option>'<?php echo "$w->kategori_nilai" ?>'</option>'+
-                       <?php
+                         ?>+
+                         '<option>'<?php echo "$w->kategori_nilai" ?>'</option>'+
+                         <?php
+                       }
+                       ?> +
+                       '<select>' +
+                       '<option>Pengetahuan</option>' +
+                       '<option>Ketrampilan</option>' +
+                       '</select>' +
+                       '<button onclick="Wclose()" style="position: absolute; right: 0; top: 0;">x</button>'+
+                       '</th>';
+                       var body = '<th>'+
+                       '<input type="text" style="width: 100%" />'+
+                       '</th>';
+                       $('#head').append(head);
+                       $('#body').append(body);
                      }
-                     ?> +
-                     '<select>' +
-                     '<option>Pengetahuan</option>' +
-                     '<option>Ketrampilan</option>' +
-                     '</select>' +
-                     '<button onclick="Wclose()" style="position: absolute; right: 0; top: 0;">x</button>'+
-                     '</th>';
-                     var body = '<th>'+
-                     '<input type="text" style="width: 100%" />'+
-                     '</th>';
-                     $('#head').append(head);
-                     $('#body').append(body);
-                   }
-                   function Wclose(){
-                    $('#head').hide();
-                    $('#body').hide();
-                  }
-                </script>
-                <form class="posisikanan">
+                     function Wclose(){
+                      $('#head').hide();
+                      $('#body').hide();
+                    }
+                  </script>
+                <!-- <form class="posisikanan">
                   <select>
                     <option>Januari</option>
                     <option>Februari</option>
@@ -297,128 +299,221 @@
                     <option>Desember</option>
                   </select>
                 </form>
-                <br/><br/>
-                <div style="overflow: auto">
-                  <table class="table table-bordered table-striped nilaisiswa" style="width: 100%">
-                    <thead>
-                      <tr class="barishari" id="head">
-                        <th class="fit">No</th>
-                        <th class="fit">Nama Siswa</th>
-                        <th class="fit">
-                          NILAI <br>
-                          <select>
-                            <?php foreach ($kategori_nilai as $w ) {
+              --><br/><br/>
+              <div style="overflow: auto">
+                <table class="table table-bordered table-striped nilaisiswa" style="width: 100%">
+                  <thead>
+                    <tr class="barishari" id="head">
+                      <th class="fit">No</th>
+                      <th class="fit">Nama Siswa</th>
+                      <th class="fit">
+                        NILAI <br>
+                        <select>
+                          <?php foreach ($kategori_nilai as $w ) {
 
-                             ?>
-                             <option><?php echo $w->kategori_nilai;?></option>
-                             <?php
-                           }
                            ?>
-                         </select>
-                         <select>
+                           <input type="option" name="Kategori" value="<?php echo $w->kategori_nilai;?>"> 
+                           <?php
+                         }
+                         ?>
+                       </select>
+                       <select>
+                        <?php
+                        foreach ($jenis_nilai_akhir as $d){
+                          ?>
+                          <option value="" name=""><?php echo $d->Jenis_na;?></option>
                           <?php
-                          foreach ($jenis_nilai_akhir as $d){
-                            ?>
-                            <option value="" name=""><?php echo $d->Jenis_na;?></option>
-                            <?php
-                          }?>
-                        </select>
-                      </th>
+                        }?>
+                      </select>
+                      <select>
+                        <?php foreach ($mapel as $m ) {
 
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <?php
-                    $no=0;
-                    foreach ($siswa as $c ) {
+                         ?>
+                         <option><?php echo $m->nama_mapel;?></option>
+                         <?php
+                       }
+                       ?>
+                     </select>
+                   </th>
+
+                 </tr>
+               </thead>
+               <tbody>
+                <?php
+                $no=0;
+                foreach ($siswa as $c ) {
                           # code...
-                      $no=$no+1;
-                      ?>
-                      <tr id="body">
-                        <th class="fit"><?php echo $no; ?></th>
-                        <th><?php echo $c->nama; ?></th>
-                        <th>
-                          <input type="text" style="width: 100%" />
-                        </th>
-                      </tr>
-                      <?php }
-                      ?>
-                    </tbody>
-                  </table>
-                </div>
-                <button class="btnjdwl">Submit</button>
-              </div>
-              <!-- /.box-body -->
+                  $no=$no+1;
+                  ?>
+                  <tr id="body">
+                    <th class="fit"><?php echo $no; ?></th>
+                    <th><?php echo $c->nama; ?></th>
+                    <th>
+                      <input type="text" style="width: 100%" />
+                    </th>
+                  </tr>
+                  <?php }
+                  ?>
+                </tbody>
+              </table>
             </div>
-
-          </div>
-          <!-- /.tab-pane -->
-          <div class="tab-pane" id="leger">
-            <div class="box">
-              <div class="box-header">
-                <h3 class="box-title">MATEMATIKA</h3>
-              </div>
-              <!-- /.box-header -->
-              <div class="box-body">
-               <select>
-                <option>Kelas 7A</option>
-                <option>Kelas 7B</option>
-                <option>Kelas 7C</option>
-                <option>Kelas 8A</option>
-                <option>Kelas 8B</option>
-                <option>Kelas 8C</option>
-                <option>Kelas 9A</option>
-              </select>
-              <form class="posisikanan">
-                <select>
-                  <option>Januari</option>
-                  <option>Februari</option>
-                  <option>Maret</option>
-                  <option>April</option>
-                  <option>Mei</option>
-                  <option>Juni</option>
-                  <option>Juli</option>
-                  <option>Agustus</option>
-                  <option>September</option>
-                  <option>Oktober</option>
-                  <option>November</option>
-                  <option>Desember</option>
-                </select>
-              </form>
-              <div class="tab-content">
-                <div class="active tab-pane" id="leger">
-                  <div class="box">
-                    <div class="box-header jarakbox" style="overflow: auto">
-
-                      <center><embed src="dokumen_kurikulum/contoh rapor.pdf" width="1000" height="1000"> </embed></center>
-                    </div>
-
-                  </div>
-                  <!-- /.box-body -->
-                </div>
-              </div>
-
-              <!-- /.tab-pane -->
-
-              <!-- /.tab-pane -->
-            </div>
-            <!-- /.tab-content -->
-          </div>
-          <!-- /.nav-tabs-custom -->
+            <button class="btnjdwl" type="Submit">Submit</button>
+          </form>
         </div>
-        <!-- /.col -->
+        <!-- /.box-body -->
       </div>
-      <!-- /.row (main row) -->
 
-    </section>
-    <!-- /.content -->
+    </div>
+    <!-- /.tab-pane -->
+
+    <div class="active tab-pane" id="daftar">
+     <select>
+      <?php
+      foreach ($kelas_reguler_berjalan as $d){
+        ?>
+        <option value=""><?php echo $d->nama_kelas;?></option>
+        <?php
+      }?>
+    </select>
+    <form class="">
+      <select>
+        <?php
+        foreach ($mapel as $x){
+          ?>
+          <option value=""><?php echo $x->nama_mapel;?></option>
+          <?php
+        }?></select>
+      </form>
+      <div class="box">
+        <div class="box-header">
+          <h3 class="box-title">Daftar Nilai Siswa</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+          <table id="example1" class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th class="fit">No</th>
+                <th>Nama</th>
+                <th>Kategori Nilai</th>
+                <th>Jenis Nilai</th>
+                <th>Mata Pelajaran</th>
+                <th>Nilai Siswa</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+
+              <?php 
+              $no=0;
+              foreach($nilai_siswa as $f){
+                $no=$no+1;
+                echo "<tr>";
+                echo "<td>$no</td>"; 
+                echo "<td>{$f->nama}</td>";
+                echo "<td>{$f->kategori_nilai}</td>";
+                echo "<td>{$f->Jenis_na}</td>";
+                echo "<td>{$f->nama_mapel}</td>";
+                echo "<td>{$f->Nilai_siswa}</td>";
+                echo "<td>";
+                ?>
+                <a data-toggle="modal" data-show="true" data-target="#nilai<?php echo $no; ?>" class="btn btn-block btn-primary button-action btnedit" href="<?php echo base_url("penilaian/form_edit_deskripsi/".$s->id_nilai_siswa); ?>" >Edit</a>
+                <a type="button" style="background: red ; border: red;" class="btn btn-block btn-primary button-action btnhapus " href="<?php echo base_url("index.php/penilaian/hapus_desknilai/".$s->id_nilai_siswa); ?>" onclick="return confirm_delete();">Hapus
+                  <?php
+                  echo "</tr>";
+                  ?>
+                  <div id="nilai<?php echo $no; ?>" class="modal fade " role="dialog">
+                    <div class="modal-dialog modal-lg" >
+                      <div class="modal-content">
+                        <div class="modal-header">
+                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                         <h4 class="modal-title">Edit Nilai Siswa</h4>
+                       </div>
+                       <div class="modal-body"> 
+                       </div>
+                     </div>
+
+
+
+                   </div>
+                 </div>
+                 <?php
+               }
+               ?>                  
+             </tbody>
+           </table>
+         </div>
+         <!-- /.box-body -->
+       </div>
+     </div>
+
+
+     <div class="tab-pane" id="leger">
+      <div class="box">
+        <div class="box-header">
+          <h3 class="box-title">MATEMATIKA</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+         <select>
+          <option>Kelas 7A</option>
+          <option>Kelas 7B</option>
+          <option>Kelas 7C</option>
+          <option>Kelas 8A</option>
+          <option>Kelas 8B</option>
+          <option>Kelas 8C</option>
+          <option>Kelas 9A</option>
+        </select>
+        <form class="posisikanan">
+          <select>
+            <option>Januari</option>
+            <option>Februari</option>
+            <option>Maret</option>
+            <option>April</option>
+            <option>Mei</option>
+            <option>Juni</option>
+            <option>Juli</option>
+            <option>Agustus</option>
+            <option>September</option>
+            <option>Oktober</option>
+            <option>November</option>
+            <option>Desember</option>
+          </select>
+        </form>
+        <div class="tab-content">
+          <div class="active tab-pane" id="leger">
+            <div class="box">
+              <div class="box-header jarakbox" style="overflow: auto">
+
+                <center><embed src="dokumen_kurikulum/contoh rapor.pdf" width="1000" height="1000"> </embed></center>
+              </div>
+
+            </div>
+            <!-- /.box-body -->
+          </div>
+        </div>
+
+        <!-- /.tab-pane -->
+
+        <!-- /.tab-pane -->
+      </div>
+      <!-- /.tab-content -->
+    </div>
+    <!-- /.nav-tabs-custom -->
   </div>
-  <!-- /.content-wrapper -->
+  <!-- /.col -->
+</div>
+<!-- /.row (main row) -->
 
-  <!-- Control Sidebar -->
-  
-  <script type="text/javascript">
-    $(document).ready(function() {
+</section>
+<!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+<!-- Control Sidebar -->
+
+<script type="text/javascript">
+  $(document).ready(function() {
       var max_fields      = 50; //maximum input boxes allowed
       var wrapper         = $(".bigbox-mapel"); //Fields wrapper
       var add_button      = $("#tambahmapel"); //Add button ID
