@@ -34,14 +34,19 @@ public function tambah_nilai(){
     $mapel=$this->input->post('mapel');
     $nilai=$this->input->post('nilai');
 
-    $data= array(
-        'NISN'=>$nisn,
+    $data=array();
+    $temp= count($this->input->post('nisn'));
+    for ($i=0; $i <$temp ; $i++) { 
+        $data[]= array(
+        'NISN'=>$nisn[$i],
         'kategori_nilai_id'=>$katnilai,
         'jenis_na_id'=>$jenis_na,
         'mapel_id'=>$mapel,
-        'Nilai_siswa'=>$nilai
+        'Nilai_siswa'=>$nilai[$i]
     );
-    $this->M_data->tambahdata($data,'nilai_siswa');
+    }
+    
+    $this->M_data->tambahdatabatch($data,'nilai_siswa');
     $this->load->view('penilaian/nilaisiswa');     
     redirect('penilaian/nilaisiswa');
 

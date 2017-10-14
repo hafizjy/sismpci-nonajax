@@ -348,10 +348,10 @@
                   <tr id="body">
                     <th class="fit"><?php echo $no; ?></th>
                     <th><?php echo $c->nama; ?>
-                      <input type="text" class="hidden" name="nisn" value="<?php echo $c->nisn; ?>">
-                    </th>
+                      <input type="text" class="hidden" name="nisn[]" value="<?php echo $c->nisn; ?>">
+                    </th> 
                     <th>
-                      <input type="text" name="nilai" style="width: 100%" >
+                      <input type="text" name="nilai[]" style="width: 100%" >
                     </th>
                   </tr>
                   <?php }
