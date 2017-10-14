@@ -244,7 +244,7 @@
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
-                  <form>
+                  <form method="post" action="<?php echo base_url('penilaian/tambah_nilai'); ?>">
                     <select>
                       <?php
                       foreach ($kelas_reguler_berjalan as $d){
@@ -308,28 +308,28 @@
                       <th class="fit">Nama Siswa</th>
                       <th class="fit">
                         NILAI <br>
-                        <select>
+                        <select name="katnilai">
                           <?php foreach ($kategori_nilai as $w ) {
 
                            ?>
-                           <input type="option" name="Kategori" value="<?php echo $w->kategori_nilai;?>"> 
+                           <option value="<?php echo $w->id_kategorinilai;?>"><?php echo $w->kategori_nilai;?></option>
                            <?php
                          }
                          ?>
                        </select>
-                       <select>
+                       <select name="jenis_na">
                         <?php
                         foreach ($jenis_nilai_akhir as $d){
                           ?>
-                          <option value="" name=""><?php echo $d->Jenis_na;?></option>
+                          <option value="<?php echo $d->id_jenis_na;?>"><?php echo $d->Jenis_na;?></option>
                           <?php
                         }?>
                       </select>
-                      <select>
+                      <select name="mapel">
                         <?php foreach ($mapel as $m ) {
 
                          ?>
-                         <option><?php echo $m->nama_mapel;?></option>
+                         <option value="<?php echo $m->id_mapel;?>"><?php echo $m->nama_mapel;?></option>
                          <?php
                        }
                        ?>
@@ -347,9 +347,11 @@
                   ?>
                   <tr id="body">
                     <th class="fit"><?php echo $no; ?></th>
-                    <th><?php echo $c->nama; ?></th>
+                    <th><?php echo $c->nama; ?>
+                      <input type="text" class="hidden" name="nisn" value="<?php echo $c->nisn; ?>">
+                    </th>
                     <th>
-                      <input type="text" style="width: 100%" />
+                      <input type="text" name="nilai" style="width: 100%" >
                     </th>
                   </tr>
                   <?php }
@@ -417,8 +419,8 @@
                 echo "<td>{$f->Nilai_siswa}</td>";
                 echo "<td>";
                 ?>
-                <a data-toggle="modal" data-show="true" data-target="#nilai<?php echo $no; ?>" class="btn btn-block btn-primary button-action btnedit" href="<?php echo base_url("penilaian/form_edit_deskripsi/".$s->id_nilai_siswa); ?>" >Edit</a>
-                <a type="button" style="background: red ; border: red;" class="btn btn-block btn-primary button-action btnhapus " href="<?php echo base_url("index.php/penilaian/hapus_desknilai/".$s->id_nilai_siswa); ?>" onclick="return confirm_delete();">Hapus
+                <a data-toggle="modal" data-show="true" data-target="#nilai<?php echo $no; ?>" class="btn btn-block btn-primary button-action btnedit" href="<?php echo base_url("penilaian/form_edit_deskripsi/".$f->id_nilai_siswa); ?>" >Edit</a>
+                <a type="button" style="background: red ; border: red;" class="btn btn-block btn-primary button-action btnhapus " href="<?php echo base_url("penilaian/hapus_nilai/".$f->id_nilai_siswa); ?>" onclick="return confirm_delete();">Hapus
                   <?php
                   echo "</tr>";
                   ?>

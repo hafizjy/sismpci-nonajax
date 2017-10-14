@@ -19,7 +19,7 @@ class M_data extends CI_Model{
 	}
 
 	function getMapel(){
-		return $this->db->query("SELECT * FROM mapel k JOIN nilai_siswa n ON k.id_mapel=n.mapel_id ");
+		return $this->db->query("SELECT * FROM mapel ");
 	}
 
 	function getKelas(){

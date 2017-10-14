@@ -28,21 +28,31 @@ class Penilaian extends CI_Controller {
 
 
 public function tambah_nilai(){
-    $bts_a=$this->input->post('bts_a');
-    $bts_b=$this->input->post('bts_b');
-    $predikat=$this->input->post('predikat');
-    $deskripsi=nl2br($this->input->post('deskripsi'));
+    $nisn=$this->input->post('nisn');
+    $katnilai=$this->input->post('katnilai');
+    $jenis_na=$this->input->post('jenis_na');
+    $mapel=$this->input->post('mapel');
+    $nilai=$this->input->post('nilai');
 
     $data= array(
-        'Nilai_atas'=>$bts_a,
-        'Nilai_bawah'=>$bts_b,
-        'predikat'=>$predikat,
-        'deskripsi'=>$deskripsi
+        'NISN'=>$nisn,
+        'kategori_nilai_id'=>$katnilai,
+        'jenis_na_id'=>$jenis_na,
+        'mapel_id'=>$mapel,
+        'Nilai_siswa'=>$nilai
     );
-    $this->M_data->tambahdata($data,'deskripsi_nilai');
-    $this->load->view('penilaian/deskripsinilai');     
-    redirect('penilaian/deskripsinilai');
+    $this->M_data->tambahdata($data,'nilai_siswa');
+    $this->load->view('penilaian/nilaisiswa');     
+    redirect('penilaian/nilaisiswa');
 
+}
+
+public function hapus_nilai($id){
+    $this->load->model('M_data');
+    $where= array('id_nilai_siswa'=>$id);
+    $table= 'nilai_siswa';
+    $this->M_data->hapusdata($where,$table);
+    redirect('penilaian/nilaisiswa');
 }
 
 public function deskripsinilai(){
