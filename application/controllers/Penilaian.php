@@ -33,17 +33,26 @@ public function tambah_nilai(){
     $jenis_na=$this->input->post('jenis_na');
     $mapel=$this->input->post('mapel');
     $nilai=$this->input->post('nilai');
+    // if ($nilai>"100") {
+    //     $nilai="100";
+    // }else{
 
+    // }
     $data=array();
     $temp= count($this->input->post('nisn'));
     for ($i=0; $i <$temp ; $i++) { 
-        $data[]= array(
+        if (is_null($nilai)) {
+        
+        }else{
+            $data[]= array(
         'NISN'=>$nisn[$i],
         'kategori_nilai_id'=>$katnilai,
         'jenis_na_id'=>$jenis_na,
         'mapel_id'=>$mapel,
         'Nilai_siswa'=>$nilai[$i]
     );
+        }
+        
     }
     
     $this->M_data->tambahdatabatch($data,'nilai_siswa');
